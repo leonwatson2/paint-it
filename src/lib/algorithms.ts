@@ -1,4 +1,4 @@
-export function floodFill(
+export function getBFSOrderOfPaintableBoxes(
   image: number[][],
   sr: number,
   sc: number,
