@@ -44,7 +44,7 @@ export const usePaintableImage = (initialImage: number[][]) => {
     (spot: [number, number]) => {
       if (image[spot[0]][spot[1]] === paintColor) return;
 
-      if (paintMode === "brush") {
+      if (paintMode === "bucket") {
         fill(spot);
       } else {
         updateImage(spot);
