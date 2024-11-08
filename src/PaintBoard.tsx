@@ -1,12 +1,11 @@
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 
 type PaintBoardProps = {
   image: number[][];
   onPaint: (spot: [number, number]) => void;
-  paintColor: number;
 };
 
-export const PaintBoard = ({ image, paintColor, onPaint }: PaintBoardProps) => {
+export const PaintBoard = ({ image, onPaint }: PaintBoardProps) => {
   const onMouseOver = useCallback(
     (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       e.preventDefault();
@@ -29,6 +28,7 @@ export const PaintBoard = ({ image, paintColor, onPaint }: PaintBoardProps) => {
       if (row !== undefined && col !== undefined) onPaint([row, col]);
     }
   };
+
   return (
     <div className="paint-board">
       {image.map((row, rowIdx) => (
@@ -36,12 +36,15 @@ export const PaintBoard = ({ image, paintColor, onPaint }: PaintBoardProps) => {
           {row.map((col, colIdx) => (
             <div
               draggable={false}
+              onDragStart={e=>e.preventDefault()}
+              onDrop={e=>e.preventDefault()}
               onDrag={e=>e.preventDefault()}
+              onMouseDown={e=>e.preventDefault()}
+              onMouseOver={onMouseOver}
               onDragEnterCapture={e=>e.preventDefault()}
               key={`${rowIdx},${colIdx},${col}`}
               data-spot={`${rowIdx},${colIdx}`}
               className={`pixel color-${col}`}
-              onMouseOver={onMouseOver}
               onClick={onClick}
             ></div>
           ))}

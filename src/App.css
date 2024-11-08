@@ -1,18 +1,19 @@
-html, body {
-  min-height: 100%;
-
-  background: gray;
+:root {
 }
+
 .App {
   text-align: center;
     
 }
-
+.adding {
+  content: "Add";
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;
 }
-#root{
+#root {
+
   margin: auto;
   height: 100%;
   padding: 30% 15px;
@@ -51,6 +52,11 @@ html, body {
   place-self: end;
 }
 
+.paint-board {
+  background: white;
+  border: 2px solid black;
+  box-shadow: 0 5px 10px 2px var(--background-color-light);
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
