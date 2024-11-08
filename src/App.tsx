@@ -28,7 +28,7 @@ function App() {
           }}
         />
         <BrushSvg
-          fill={paintMode === 'bucket' ? COLORS[paintColor] : "white"}
+          fill={paintMode === 'brush' ? COLORS[paintColor] : "white"}
           onClick={() => {
             setPaintMode("brush");
           }}
