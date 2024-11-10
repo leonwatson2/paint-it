@@ -35,12 +35,12 @@ export const PaintBoard = ({ image, onPaint }: PaintBoardProps) => {
           {row.map((col, colIdx) => (
             <div
               draggable={false}
-              onDragStart={e=>e.preventDefault()}
-              onDrop={e=>e.preventDefault()}
-              onDrag={e=>e.preventDefault()}
-              onMouseDown={e=>e.preventDefault()}
+              onDragStart={e => e.preventDefault()}
+              onDrop={e => e.preventDefault()}
+              onDrag={e => e.preventDefault()}
+              onMouseDown={e => e.preventDefault()}
               onMouseOver={onMouseOver}
-              onDragEnterCapture={e=>e.preventDefault()}
+              onDragEnterCapture={e => e.preventDefault()}
               key={`${rowIdx},${colIdx},${col}`}
               data-spot={`${rowIdx},${colIdx}`}
               className={`pixel color-${col}`}
