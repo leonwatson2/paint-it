@@ -1,82 +1,78 @@
 :root {
+  --active-color: #1026b5;
+  --color-0: #1026b5;
+  --color-1: #108eb5;
+  --color-2: #105ab5;
 }
 
-.App {
-  text-align: center;
-    
-}
-.adding {
-  content: "Add";
-}
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 #root {
-
   margin: auto;
   height: 100%;
-  padding: 30% 15px;
+  padding-block: 50px 200px;
 }
-.bucket {
-  fill: black;
+
+.bucket, .brush {
+  fill: white;
 }
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+:is(.bucket, .brush).active {
+  fill: var(--active-color);
 }
+:is(.bucket, .brush):hover {
+  fill: var(--active-color);
+}
+
 .container {
-  display: flex;
-  justify-content:center;
-  height: 100%
+  @apply flex justify-center h-full;
 }
+
 .pixel-row {
   display: flex;
 }
 
-.pixel {
+.pixel, .color-picker {
   width: 40px;
   height: 40px;
+  transition: background 0.2s;
 }
-.color-0 {
-  background: #1026b5;
+
+.pixel:hover {
+  background: var(--active-color);
 }
-.color-1 {
-  background: #108eb5;
+
+.color-picker {
+  transition: 0.2s;
+  opacity: 1;
 }
-.color-2 {
-  background: #105ab5;
+
+.color-picker:hover {
+  opacity: 0.8;
 }
-.colors { 
+
+.color-picker.active {
+  border: 2px solid white;
+}
+
+.color-pallet { 
   place-self: end;
 }
+
+.color-0 {
+  background: var(--color-0);
+}
+
+.color-1 {
+  background: var(--color-1);
+}
+
+.color-2 {
+  background: var(--color-2);
+}
+
 
 .paint-board {
   background: white;
   border: 2px solid black;
   box-shadow: 0 5px 10px 2px var(--background-color-light);
 }
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
 
-.App-link {
-  color: #61dafb;
-}
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}

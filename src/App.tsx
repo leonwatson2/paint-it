@@ -3,51 +3,65 @@ import "./App.css";
 import { BrushSvg, BucketSvg } from "./BucketSvg";
 import { Button } from "./components/ui/button";
 import { PaintBoard } from "./PaintBoard";
-import { COLORS } from "@/lib/constants";
-
-const IMAGE_LENGTH = 12;
-
-const initialImage = Array.from({ length: IMAGE_LENGTH }, () =>
-  Array.from({ length: IMAGE_LENGTH }, () => -1),
-);
+import { COLORS, initialImage } from "@/lib/constants";
+import { useRottingOranges } from "./hooks/useRottingOranges";
+import { cn } from "./lib/utils";
+import { usePaintControls } from "./hooks/usePaintControls";
 
 function App() {
-  const { image, paintMode, paintColor, onPaint, reset, setPaintColor, setPaintMode } = usePaintableImage(
+  const { setPaintMode, setPaintColor, paintMode, paintColor } = usePaintControls();
+  const { image, onPaint, reset } = usePaintableImage(
     initialImage,
+    { paintMode, paintColor },
   );
+  const { orangeImage, onRun, steps, resetOranges, onPaint: onOrangePaint } = useRottingOranges(paintColor, paintMode);
+
   return (
-    <div className="container">
-      <div className="image">
-        <PaintBoard image={image} onPaint={onPaint} />
+    <>
+      <div className="container block">
+        <div className="image">
+          <PaintBoard image={orangeImage} onPaint={onOrangePaint} />
+        </div>
+        <div className="text-6xl flex flex-col justify-center items-center">
+          <h2 onClick={resetOranges} className="text-6xl cursor-pointer">{steps}</h2>
+          <div className="space-y-4 flex items-center justify-center flex-col">
+            <Button onClick={onRun} >Run the thing </Button>
+          </div>
+        </div>
       </div>
-      <div className="controls">
-        <BucketSvg
-          fill={paintMode === 'bucket' ? COLORS[paintColor] : "white"}
-          onClick={() => {
-            setPaintMode("bucket");
-          }}
-        />
-        <BrushSvg
-          fill={paintMode === 'bucket' ? COLORS[paintColor] : "white"}
-          onClick={() => {
-            setPaintMode("brush");
-          }}
-        />
-        <Button variant={"default"} onClick={reset}>
-          {" "}
-          Reset
-        </Button>
+      <div className="container">
+        <div className="image">
+          <PaintBoard image={image} onPaint={onPaint} />
+        </div>
+        <div className="controls">
+          <BucketSvg
+            className={cn("bucket cursor-pointer", { active: paintMode === "bucket" })}
+            onClick={() => {
+              setPaintMode("bucket");
+            }}
+          />
+          <BrushSvg
+            className={cn("brush cursor-pointer", { active: paintMode === "brush" })}
+            onClick={() => {
+              setPaintMode("brush");
+            }}
+          />
+          <Button variant={"default"} onClick={reset}>
+            {" "}
+            Reset
+          </Button>
+        </div>
+        <div className="color-pallet">
+          {COLORS.map((color, idx) => (
+            <div
+              className={`color-picker color-${idx} cursor-pointer ${paintColor === idx ? "active" : ""}`}
+              key={color}
+              onClick={() => setPaintColor(idx)}
+            ></div>
+          ))}
+        </div>
       </div>
-      <div className="colors">
-        {COLORS.map((color, idx) => (
-          <div
-            className={`pixel color-${idx}`}
-            key={color}
-            onClick={() => setPaintColor(idx)}
-          ></div>
-        ))}
-      </div>
-    </div>
+    </>
   );
 }
 export default App;

@@ -21,7 +21,6 @@ export const PaintBoard = ({ image, onPaint }: PaintBoardProps) => {
   );
   const onClick = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.preventDefault();
-
     const dataSpot = e.currentTarget.dataset.spot;
     if (dataSpot) {
       const [row, col] = dataSpot.split(",").map((d) => +d);
