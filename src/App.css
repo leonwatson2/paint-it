@@ -25,27 +25,28 @@
   @apply flex justify-center h-full;
 }
 
+.algo-header {
+  @apply text-2xl text-center mb-4
+}
+
 .pixel-row {
-  display: flex;
+  @apply flex;
 }
 
 .pixel, .color-picker {
-  width: 40px;
-  height: 40px;
-  transition: background 0.2s;
+  @apply size-10 transition-colors duration-200;
 }
 
 .pixel:hover {
-  background: var(--active-color);
+  @apply bg-[var(--active-color)];
 }
 
 .color-picker {
-  transition: 0.2s;
-  opacity: 1;
+  @apply duration-200;
 }
 
 .color-picker:hover {
-  opacity: 0.8;
+  @apply opacity-80;
 }
 
 .color-picker.active {
@@ -56,23 +57,21 @@
   place-self: end;
 }
 
-.color-0 {
-  background: var(--color-0);
+.color-0 { 
+  @apply bg-[var(--color-0)];
 }
 
-.color-1 {
-  background: var(--color-1);
+.color-1 { 
+  @apply bg-[var(--color-1)];
 }
 
-.color-2 {
-  background: var(--color-2);
+.color-2 { 
+  @apply bg-[var(--color-2)];
 }
 
 
 .paint-board {
-  background: white;
-  border: 2px solid black;
-  box-shadow: 0 5px 10px 2px var(--background-color-light);
+  @apply bg-white border-2 border-black shadow-md shadow-[var(--background-color-light)];
 }
 
 
