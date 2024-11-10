@@ -1,13 +1,12 @@
 import { usePaintableImage } from "@/hooks/usePaintableImage";
 import "./App.css";
-import { BrushSvg, BucketSvg } from "./BucketSvg";
 import { Button } from "./components/ui/button";
 import { PaintBoard } from "./PaintBoard";
 import { initialImage } from "@/lib/constants";
 import { useRottingOranges } from "./hooks/useRottingOranges";
-import { cn } from "./lib/utils";
 import { usePaintControls } from "./hooks/usePaintControls";
 import { ColorPalette } from "./components/ColorPalette";
+import { PaintControls } from "./components/PaintControls";
 
 function App() {
   const { setPaintMode, setPaintColor, paintMode, paintColor } = usePaintControls();
@@ -20,7 +19,7 @@ function App() {
   return (
     <>
       <h1 className="text-6xl text-center mb-12">Algo tester</h1>
-      <div className="container block">
+      <div className="container">
         <h2 className="algo-header">994: Rotting Oranges</h2>
         <div className="image">
           <PaintBoard image={orangeImage} onPaint={onOrangePaint} />
@@ -37,23 +36,7 @@ function App() {
         <div className="image">
           <PaintBoard image={image} onPaint={onPaint} />
         </div>
-        <div className="controls">
-          <BucketSvg
-            className={cn("bucket cursor-pointer", { active: paintMode === "bucket" })}
-            onClick={() => {
-              setPaintMode("bucket");
-            }}
-          />
-          <BrushSvg
-            className={cn("brush cursor-pointer", { active: paintMode === "brush" })}
-            onClick={() => {
-              setPaintMode("brush");
-            }}
-          />
-          <Button variant={"default"} onClick={reset}>
-            Reset
-          </Button>
-        </div>
+        <PaintControls setPaintMode={setPaintMode} paintMode={paintMode} reset={reset} />
         <ColorPalette setPaintColor={setPaintColor} paintColor={paintColor} />
       </div>
     </>
