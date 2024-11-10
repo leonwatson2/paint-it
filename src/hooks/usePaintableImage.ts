@@ -65,6 +65,7 @@ export const usePaintableImage: usePaintableImageProps = (initialImage: number[]
   useEffect(() => {
     window.document.getElementById("root")?.style.setProperty("--active-color", COLORS[paintColor]);
   }, [paintColor]);
+
   return {
     image,
     paintMode,

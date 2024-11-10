@@ -38,7 +38,6 @@ export const useRottingOranges = (paintColor: number, paintMode: PaintMode, STEP
   const reset = () => {
     setOrangeImage(rottingOrangesInitial);
     setSteps(0);
-    console.log({ timeouts })
     timeouts.forEach(clearTimeout);
   }
 

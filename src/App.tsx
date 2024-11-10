@@ -47,19 +47,10 @@ function App() {
             }}
           />
           <Button variant={"default"} onClick={reset}>
-            {" "}
             Reset
           </Button>
         </div>
-        <div className="color-pallet">
-          {COLORS.map((color, idx) => (
-            <div
-              className={`color-picker color-${idx} cursor-pointer ${paintColor === idx ? "active" : ""}`}
-              key={color}
-              onClick={() => setPaintColor(idx)}
-            ></div>
-          ))}
-        </div>
+        <ColorPalette setPaintColor={setPaintColor} paintColor={paintColor} />
       </div>
     </>
   );
