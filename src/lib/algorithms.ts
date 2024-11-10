@@ -68,16 +68,16 @@ export function getRottingChanges(grid: number[][]) {
   ]
   let minCount = Infinity;
   visited.clear()
-  let count = 0;
+  let count:undefined | number = 0;
   const que: OrangeQueue[] = rotting.map(o => [o[0], o[1], undefined] as OrangeQueue);
   const result = []
   while (que.length) {
     const len = que.length
     for (let i = 0; i < len; i++) {
-      const [row, col, step] = que.shift()
+      const [row, col, step] = que.shift()!;
       visited.add(`${row},${col}`)
       count = step;
-      for (let [dx, dy] of directions) {
+      for (const [dx, dy] of directions) {
         const newRow = row + dx;
         const newCol = col + dy;
         if (
@@ -92,7 +92,7 @@ export function getRottingChanges(grid: number[][]) {
       }
     }
   }
-  minCount = Math.min(count, minCount);
+  minCount = Math.min(count!, minCount);
   return { steps: result, minCount };
   // return minCount !== Infinity && visited.size === (oranges.length + rotting.length) ? minCount : -1
 };
