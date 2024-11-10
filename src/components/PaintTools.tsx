@@ -2,14 +2,15 @@ import { BrushSvg, BucketSvg } from "@/BucketSvg";
 import { cn } from "@/lib/utils";
 import { Button } from "./ui/button";
 
-type PaintControlsProps = {
+type PaintToolsProps = {
   setPaintMode: (mode: "brush" | "bucket") => void;
   paintMode: "brush" | "bucket";
   reset: () => void;
 };
-export const PaintControls = ({ setPaintMode, paintMode, reset }: PaintControlsProps) => {
+
+export const PaintTools = ({ setPaintMode, paintMode, reset }: PaintToolsProps) => {
   return (
-    <div className="controls">
+    <div className="tools">
       <BucketSvg
         className={cn("bucket cursor-pointer", { active: paintMode === "bucket" })}
         onClick={() => {
@@ -23,7 +24,7 @@ export const PaintControls = ({ setPaintMode, paintMode, reset }: PaintControlsP
         }}
       />
       <Button variant={"default"} onClick={reset}>
-        Reset
+        Reset Main
       </Button>
     </div>
   );
