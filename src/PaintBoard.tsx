@@ -1,11 +1,13 @@
+import { cn } from "@/lib/utils";
 import { useCallback } from "react";
 
 type PaintBoardProps = {
   image: number[][];
   onPaint: (spot: [number, number]) => void;
+  running?: boolean;
 };
 
-export const PaintBoard = ({ image, onPaint }: PaintBoardProps) => {
+export const PaintBoard = ({ image, onPaint, running }: PaintBoardProps) => {
   const onMouseOver = useCallback(
     (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
       e.preventDefault();
@@ -29,7 +31,7 @@ export const PaintBoard = ({ image, onPaint }: PaintBoardProps) => {
   };
 
   return (
-    <div className="paint-board">
+    <div className={ cn("paint-board", {running: running}) }>
       {image.map((row, rowIdx) => (
         <div key={rowIdx} className="pixel-row" data-row={rowIdx}>
           {row.map((col, colIdx) => (

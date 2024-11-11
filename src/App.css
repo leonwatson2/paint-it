@@ -1,3 +1,4 @@
+/** VARIABLES **/
 :root {
   --active-color: #1026b5;
   --color-0: #1026b5;
@@ -5,33 +6,92 @@
   --color-2: #105ab5;
 }
 
+/** ROOT **/
 #root {
   @apply m-auto h-full pt-2 pb-52;
 }
 
-.bucket, .brush {
-  fill: white;
-}
-:is(.bucket, .brush).active {
-  fill: var(--active-color);
-}
-:is(.bucket, .brush):hover {
-  fill: var(--active-color);
+/** PAINT BOARD **/
+.paint-board {
+  position: relative;
+  background-color: green;
+  @apply w-fit mx-auto border-2 border-black shadow-md rounded-md shadow-[var(--background-color-light)] p-0;
 }
 
-.container {
-  @apply flex justify-center h-full;
+/** BORDER ANIMATION **/
+@property --angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
 }
 
-.algo-header {
-  @apply text-2xl text-center mb-4
+@property --hue {
+  syntax: "<integer>";
+  initial-value: 0;
+  inherits: false;
 }
 
+.paint-board.running:after,
+.paint-board.running:before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  animation: border-glow 4s linear infinite;
+  top: -50%;
+  left: -50%;
+  translate: 50% 50%;
+  z-index: -1;
+  padding: 3px;
+  border-radius: 10px;
+  background-image: conic-gradient(
+    from var(--angle),
+    hsl(var(--hue) 100% 75%),
+    transparent
+  );
+}
+
+.paint-board.running:before {
+  filter: blur(45px);
+}
+
+@keyframes border-glow {
+  from {
+    --angle: 0deg;
+    --hue: 0;
+  }
+  to {
+    --angle: 360deg;
+    --hue: 720;
+  }
+}
+
+/** PIXELS **/
 .pixel-row {
   @apply flex;
 }
 
-.pixel, .color-picker {
+.pixel-row:first-of-type {
+  @apply rounded-tl rounded-tr;
+}
+
+.pixel-row:first-of-type > *:first-child {
+  @apply rounded-tl;
+}
+
+.pixel-row:first-of-type > *:last-child {
+  @apply rounded-tr;
+}
+
+.pixel-row:last-of-type > *:first-child {
+  @apply rounded-bl;
+}
+
+.pixel-row:last-of-type > *:last-child {
+  @apply rounded-br;
+}
+
+.pixel {
   @apply size-10 transition-colors duration-200;
 }
 
@@ -39,8 +99,31 @@
   @apply bg-[var(--active-color)];
 }
 
+/** TOOLS (BUCKET AND BRUSH) **/
+.bucket,
+.brush {
+  fill: white;
+}
+
+:is(.bucket, .brush).active {
+  fill: var(--active-color);
+}
+
+:is(.bucket, .brush):hover {
+  fill: var(--active-color);
+}
+
+.tools {
+  @apply inline-flex gap-4 items-center;
+}
+
+/** CONTROLS **/
+.controls {
+  @apply flex items-center space-x-4 sticky top-4;
+}
+
 .color-picker {
-  @apply duration-200;
+  @apply size-10 transition-colors duration-200;
 }
 
 .color-picker:hover {
@@ -51,29 +134,25 @@
   @apply border-2 border-white;
 }
 
-.controls {
-  @apply flex items-center space-x-4 sticky top-4;
-}
-.tools {
-  @apply inline-flex gap-4;
-}
-.color-palette { 
+/** COLOR PALETTE **/
+.color-palette {
   @apply inline-flex gap-4 place-self-end;
 }
 
-.color-0 { 
+.color-0 {
   @apply bg-[var(--color-0)];
 }
 
-.color-1 { 
+.color-1 {
   @apply bg-[var(--color-1)];
 }
 
-.color-2 { 
+.color-2 {
   @apply bg-[var(--color-2)];
 }
 
-
-.paint-board {
-  @apply w-fit mx-auto bg-white border-2 border-black shadow-md shadow-[var(--background-color-light)];
+/** HEADERS **/
+.algo-header {
+  @apply text-2xl text-center mb-4;
 }
+

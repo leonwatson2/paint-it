@@ -37,7 +37,7 @@ function App() {
       <h1 className="text-6xl text-center mb-12">Algo tester</h1>
       <section>
         <h2 className="algo-header">994: Rotting Oranges</h2>
-        <PaintBoard image={orangeImage} onPaint={onOrangePaint} />
+        <PaintBoard image={orangeImage} onPaint={onOrangePaint} running={running}/>
         <div className="text-6xl flex flex-col justify-center items-center">
           <h2
             onClick={resetOranges}
