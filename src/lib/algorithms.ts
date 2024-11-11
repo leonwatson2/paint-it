@@ -44,6 +44,7 @@ export function getBFSOrderOfPaintableBoxes(
 
 const ORANGE = 1;
 const ROTTED = 2;
+
 type OrangeQueue = [number, number, number | undefined]
 export function getRottingChanges(grid: number[][]) {
 
@@ -66,8 +67,9 @@ export function getRottingChanges(grid: number[][]) {
     [0, -1],
     [-1, 0],
   ]
+  const isValidSpot = (row: number, col: number) => row > -1 && col > -1 && row < grid.length && col < grid[0].length && 
+                                                    grid[row][col] === ORANGE && !visited.has(`${row},${col}`)
   let minCount = Infinity;
-  visited.clear()
   let count:undefined | number = 0;
   const que: OrangeQueue[] = rotting.map(o => [o[0], o[1], undefined] as OrangeQueue);
   const result = []
@@ -81,9 +83,7 @@ export function getRottingChanges(grid: number[][]) {
         const newRow = row + dx;
         const newCol = col + dy;
         if (
-          newRow >= 0 && newCol >= 0 &&
-          newRow < grid.length && newCol < grid[0].length &&
-          grid[newRow][newCol] !== ROTTED && !visited.has(`${newRow},${newCol}`)
+          isValidSpot(newRow, newCol)
         ) {
           visited.add(`${newRow},${newCol}`)
           result.push([newRow, newCol, step ? step + 1 : 1, ROTTED])

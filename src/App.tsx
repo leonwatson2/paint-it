@@ -14,7 +14,7 @@ function App() {
     initialImage,
     { paintMode, paintColor },
   );
-  const { orangeImage, onRun, steps, resetOranges, onPaint: onOrangePaint } = useRottingOranges(paintColor, paintMode);
+  const { orangeImage, onRun, steps, resetOranges, onPaint: onOrangePaint, running } = useRottingOranges(paintColor, paintMode);
 
   return (
     <>
@@ -29,7 +29,7 @@ function App() {
         <div className="text-6xl flex flex-col justify-center items-center">
           <h2 onClick={resetOranges} title="Reset" className="text-6xl cursor-pointer">{steps}</h2>
           <div className="space-y-4 flex items-center justify-center flex-col">
-            <Button onClick={onRun}>Run the thing </Button>
+            <Button onClick={onRun}>{running ? "Running" : "Run the thing"}</Button>
           </div>
         </div>
       </section>
