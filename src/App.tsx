@@ -9,17 +9,29 @@ import { ColorPalette } from "./components/ColorPalette";
 import { PaintTools } from "./components/PaintTools";
 
 function App() {
-  const { setPaintMode, setPaintColor, paintMode, paintColor } = usePaintControls();
-  const { image, onPaint, reset } = usePaintableImage(
-    initialImage,
-    { paintMode, paintColor },
-  );
-  const { orangeImage, onRun, steps, resetOranges, onPaint: onOrangePaint, running } = useRottingOranges(paintColor, paintMode);
+  const { setPaintMode, setPaintColor, paintMode, paintColor } =
+    usePaintControls();
+  const { image, onPaint, reset } = usePaintableImage(initialImage, {
+    paintMode,
+    paintColor,
+  });
+  const {
+    orangeImage,
+    onRun,
+    steps,
+    resetOranges,
+    onPaint: onOrangePaint,
+    running,
+  } = useRottingOranges(paintColor, paintMode);
 
   return (
     <>
       <div className="controls">
-        <PaintTools setPaintMode={setPaintMode} paintMode={paintMode} reset={reset} />
+        <PaintTools
+          setPaintMode={setPaintMode}
+          paintMode={paintMode}
+          reset={reset}
+        />
         <ColorPalette setPaintColor={setPaintColor} paintColor={paintColor} />
       </div>
       <h1 className="text-6xl text-center mb-12">Algo tester</h1>
@@ -27,9 +39,17 @@ function App() {
         <h2 className="algo-header">994: Rotting Oranges</h2>
         <PaintBoard image={orangeImage} onPaint={onOrangePaint} />
         <div className="text-6xl flex flex-col justify-center items-center">
-          <h2 onClick={resetOranges} title="Reset" className="text-6xl cursor-pointer">{steps}</h2>
+          <h2
+            onClick={resetOranges}
+            title="Reset"
+            className="text-6xl cursor-pointer"
+          >
+            {steps}
+          </h2>
           <div className="space-y-4 flex items-center justify-center flex-col">
-            <Button onClick={onRun}>{running ? "Running" : "Run the thing"}</Button>
+            <Button onClick={onRun}>
+              {running ? "Running" : "Run the thing"}
+            </Button>
           </div>
         </div>
       </section>
