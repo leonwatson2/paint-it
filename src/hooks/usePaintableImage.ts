@@ -1,17 +1,26 @@
 import { getBFSOrderOfPaintableBoxes } from "@/lib/algorithms";
-import { useCallback, useState } from "react";
+import { COLORS } from "@/lib/constants";
+import { useCallback, useEffect, useState } from "react";
 
-type PaintMode = "brush" | "bucket";
 
-export const usePaintableImage = (initialImage: number[][]) => {
+type usePaintableImageProps = {
+  (initialImage: number[][], controls: { paintMode: PaintMode, paintColor: PaintColor }): {
+    image: number[][];
+    paintMode: PaintMode;
+    paintColor: PaintColor;
+    onPaint: (spot: [number, number]) => void;
+    reset: () => void;
+  };
+};
+
+
+export const usePaintableImage: usePaintableImageProps = (initialImage: number[][], { paintMode, paintColor }) => {
   const [image, setImage] = useState(initialImage);
-  const [paintColor, setPaintColor] = useState(0);
-  const [paintMode, setPaintMode] = useState<PaintMode>("brush");
 
   const reset = () => setImage(initialImage);
 
   const updateImage = useCallback(
-    ([newRow, newCol]: [number, number], color?: number) => {
+    ([newRow, newCol]: [number, number, number, number], color?: number) => {
       setImage((image) =>
         image.map((row, rowIdx) =>
           row.map((col, colIdx) =>
@@ -47,18 +56,21 @@ export const usePaintableImage = (initialImage: number[][]) => {
       if (paintMode === "bucket") {
         fill(spot);
       } else {
-        updateImage(spot);
+        updateImage([...spot, 0, paintColor]);
       }
     },
     [paintMode, updateImage, image, paintColor, fill],
   );
+
+  useEffect(() => {
+    window.document.getElementById("root")?.style.setProperty("--active-color", COLORS[paintColor]);
+  }, [paintColor]);
+
   return {
     image,
     paintMode,
     paintColor,
     onPaint,
     reset,
-    setPaintColor,
-    setPaintMode,
   };
 };

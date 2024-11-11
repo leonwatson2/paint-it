@@ -1,51 +1,75 @@
-html, body {
-  height: 100%;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+:root {
+  --active-color: #1026b5;
+  --color-0: #1026b5;
+  --color-1: #108eb5;
+  --color-2: #105ab5;
 }
 
 #root {
   margin: auto;
-  padding: auto 15px;
+  height: 100%;
+  padding-block: 50px 200px;
 }
 
-.bucket {
-  fill: black;
-
+.bucket, .brush {
+  fill: white;
+}
+:is(.bucket, .brush).active {
+  fill: var(--active-color);
+}
+:is(.bucket, .brush):hover {
+  fill: var(--active-color);
 }
 
 .container {
-  display: flex;
-  justify-content:center;
-  height: 100%
+  @apply flex justify-center h-full;
+}
+
+.algo-header {
+  @apply text-2xl text-center mb-4
 }
 
 .pixel-row {
-  display: flex;
+  @apply flex;
 }
 
-.pixel {
-  width: 40px;
-  height: 40px;
+.pixel, .color-picker {
+  @apply size-10 transition-colors duration-200;
 }
-.color-0 {
-  background: #1026b5;
+
+.pixel:hover {
+  @apply bg-[var(--active-color)];
 }
-.color-1 {
-  background: #108eb5;
+
+.color-picker {
+  @apply duration-200;
 }
-.color-2 {
-  background: #105ab5;
+
+.color-picker:hover {
+  @apply opacity-80;
 }
-.colors { 
+
+.color-picker.active {
+  border: 2px solid white;
+}
+
+.color-palette { 
   place-self: end;
 }
 
-.paint-board {
-  background: white;
-  border: 2px solid black;
-  box-shadow: 0 5px 10px 2px var(--background-color-light);
+.color-0 { 
+  @apply bg-[var(--color-0)];
 }
 
+.color-1 { 
+  @apply bg-[var(--color-1)];
+}
+
+.color-2 { 
+  @apply bg-[var(--color-2)];
+}
+
+
+.paint-board {
+  @apply bg-white border-2 border-black shadow-md shadow-[var(--background-color-light)];
+}
