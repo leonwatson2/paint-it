@@ -1,6 +1,5 @@
 import { getBFSOrderOfPaintableBoxes } from "@/lib/algorithms";
-import { COLORS } from "@/lib/constants";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 
 
 type usePaintableImageProps = {
@@ -62,10 +61,7 @@ export const usePaintableImage: usePaintableImageProps = (initialImage: number[]
     [paintMode, updateImage, image, paintColor, fill],
   );
 
-  useEffect(() => {
-    window.document.getElementById("root")?.style.setProperty("--active-color", COLORS[paintColor]);
-  }, [paintColor]);
-
+  
   return {
     image,
     paintMode,
