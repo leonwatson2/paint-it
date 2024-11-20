@@ -1,5 +1,8 @@
-import { useCallback, useState } from "react"
-import { getBFSOrderOfPaintableBoxes, getRottingChanges } from "@/lib/algorithms";
+import { useCallback, useState } from "react";
+import {
+  getBFSOrderOfPaintableBoxes,
+  getRottingChanges,
+} from "@/lib/algorithms";
 
 const rottingOrangesInitial = [
   [2, 0, 1, 1, 1, 1, 1, 1, 1, 1],
@@ -11,17 +14,22 @@ const rottingOrangesInitial = [
   [1, 0, 1, 0, 0, 0, 0, 1, 0, 1],
   [1, 0, 1, 1, 1, 1, 1, 1, 0, 1],
   [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+  [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
 ];
-
-export const useRottingOranges = (paintColor: number, paintMode: PaintMode, STEP_SPEED_MS = 400) => {
-
-  const [orangeImage, setOrangeImage] = useState(rottingOrangesInitial)
+export const useRottingOranges = (
+  paintColor: number,
+  paintMode: PaintMode,
+  STEP_SPEED_MS = 400,
+) => {
+  const [orangeImage, setOrangeImage] = useState(rottingOrangesInitial);
   const [steps, setSteps] = useState(0);
-  const [timeouts, setTimeouts] = useState<NodeJS.Timeout[]>([])
+  const [timeouts, setTimeouts] = useState<NodeJS.Timeout[]>([]);
   const [running, setRunning] = useState(false);
   const updateImage = useCallback(
-    ([newRow, newCol, step, paintColor]: [number, number, number, number], color?: number) => {
+    (
+      [newRow, newCol, step, paintColor]: [number, number, number, number],
+      color?: number,
+    ) => {
       setOrangeImage((image) =>
         image.map((row, rowIdx) =>
           row.map((col, colIdx) =>
@@ -33,15 +41,17 @@ export const useRottingOranges = (paintColor: number, paintMode: PaintMode, STEP
           ),
         ),
       );
-      setSteps(step)
-    }, [setOrangeImage, setSteps]);
+      setSteps(step);
+    },
+    [setOrangeImage, setSteps],
+  );
 
   const reset = () => {
     setOrangeImage(rottingOrangesInitial);
     setSteps(0);
     timeouts.forEach(clearTimeout);
     setRunning(false);
-  }
+  };
 
   const fill = useCallback(
     ([row, col]: [number, number]) => {
@@ -60,7 +70,9 @@ export const useRottingOranges = (paintColor: number, paintMode: PaintMode, STEP
       });
       setTimeouts(newTimeouts);
       return () => newTimeouts.forEach(clearTimeout);
-    }, [updateImage, orangeImage, paintColor, setTimeouts, timeouts, running]);
+    },
+    [updateImage, orangeImage, paintColor, setTimeouts, timeouts, running],
+  );
 
   const onPaint = useCallback(
     (spot: [number, number]) => {
@@ -88,7 +100,9 @@ export const useRottingOranges = (paintColor: number, paintMode: PaintMode, STEP
     setRunning(true);
 
     const bfsChanges = getRottingChanges(orangeImage);
-    const newTimeouts = (bfsChanges.steps as [number, number, number, number][]).map((spot, idx) => {
+    const newTimeouts = (
+      bfsChanges.steps as [number, number, number, number][]
+    ).map((spot, idx) => {
       return setTimeout(() => {
         updateImage(spot);
         if (idx === bfsChanges.steps.length - 1) {
@@ -97,9 +111,8 @@ export const useRottingOranges = (paintColor: number, paintMode: PaintMode, STEP
       }, idx * STEP_SPEED_MS);
     });
 
-    setTimeouts(old => [...old, ...newTimeouts]);
+    setTimeouts((old) => [...old, ...newTimeouts]);
     return () => newTimeouts.forEach(clearTimeout);
-  }
-  return { orangeImage, onRun, steps, resetOranges: reset, onPaint, running }
-
-}
+  };
+  return { orangeImage, onRun, steps, resetOranges: reset, onPaint, running };
+};
